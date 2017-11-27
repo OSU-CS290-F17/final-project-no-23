@@ -1,0 +1,20 @@
+a {
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
+.songBox {
+
+}
+
+.albumArtworkContainer{
+  height: 100%;
+  width: 100%;
+  display: inline-flex;
+}
