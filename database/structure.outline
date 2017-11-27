@@ -1,0 +1,28 @@
+
+MONGO DB DATABASE CONFIGURATION
+
+TWO primary elements
+
+1) USER
+
+2) GROUP
+
+
+USER
+- Name
+- Password
+- Current Group
+
+GROUP (are groups persistent????)
+- Current USERS (array)
+    - USER permissions
+- current MODE
+- current QUEUE
+- other configuration settings
+    - endpoints type (spotify, apple, google music, etc)
+    - public/protected
+    -
+
+
+
+Secondary Elements (withing GROUPS or USERS)
