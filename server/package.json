@@ -4,11 +4,12 @@
   "description": "Node backend server for group music.",
   "main": "main.js",
   "scripts": {
-    "test": "node main.js"
+    "dev": "node main.js"
   },
-  "dependencies" : {
-      "express" : "latest",
-      "spotify" : "latest"
+  "dependencies": {
+    "express": "latest",
+    "mongodb": "^2.2.33",
+    "spotify": "latest"
   },
   "author": "Nathan Jewell",
   "license": "ISC"
