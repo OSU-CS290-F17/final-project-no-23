@@ -8,6 +8,8 @@ const search = new SearchController();
 
 var apiRegister = {};
 
+
+
 var registerAPIFunction = function(name, func) {
     var path = name.split("/"); //split path into all components
     var p = apiRegister;

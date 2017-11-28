@@ -1,4 +1,3 @@
-
 <template>
     <ol id="current-queue">
         <li v-for="song in currentQueue">{{song.title}}</li>

@@ -2,10 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>client</title>
+    <title>Login</title>
+    <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin">
   </head>
   <body>
-    <div id="app"></div>
-    <script src="/dist/build.js"></script>
+    <div id = "loginModal" class = "modal">
+      <div class =  "modalContent">
+        <div class = "inputcontainer">
+          <h2>Login</h2>
+          <input type = "text" name = "username" placeholder="Username"><br>
+          <input type = "text" name = "password" placeholder="Password">
+        </div>
+      </div>
+    </div>
+
+    <button id = "joinButton">Join</button><br>
+    <button id = "createButton">Create</button><br>
+
+    <script src = "index.js" type = "text/javascript"></script>
+
   </body>
+
 </html>
