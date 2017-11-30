@@ -7,9 +7,11 @@
     "dev": "node main.js"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "latest",
-    "mongodb": "^2.2.33",
-    "spotify": "latest"
+    "rethinkdb": "^2.3.3",
+    "spotify-web-api-node": "^2.5.0",
+    "ws": "^3.3.2"
   },
   "author": "Nathan Jewell",
   "license": "ISC"
