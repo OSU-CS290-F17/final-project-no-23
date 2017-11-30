@@ -10,5 +10,5 @@ module.exports.getConnection = function(hostP, portP, dbP) {
     r.connect( {host: hostP, port: portP, db: dbP}, function(err, conn) {
         if (err) throw err;
         return conn;
-    }
+    });
 }

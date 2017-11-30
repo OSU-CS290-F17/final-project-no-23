@@ -9,11 +9,11 @@ Adds new songs to queue from song search list
 */
 
 module.exports = function() {   //exporting queue controller object
-    var router = require("./router.js");
+    var Router = require("./../utilities/router.js");
 
     var that = this;
 
-    that.router = router();
+    that.router = new Router();
 
     that.router.register("getQueue", (req, res) => {
         res.json({success : true, currentQueue : [{title: "Twinkle Twinkle Little Star"}, {title : "Mary Had a Little Lamb"}]});

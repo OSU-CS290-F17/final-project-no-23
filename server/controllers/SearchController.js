@@ -9,7 +9,12 @@ Expands results in each category on click
 */
 
 
-exports.router = (req, res, next) => {
-    console.log("Recieved Search Request");
-    res.json({success : true});
+module.exports = function() {   //exporting queue controller object
+    var Router = require("./../utilities/router.js");
+
+    var that = this;
+
+    that.router = new Router();
+
+
 }

@@ -22,7 +22,7 @@ var queue = new QueueController();      //endpoint controller for queue function
 var search = new SearchController();    //endpoint controller for search functionality
 var user = new UserController();
 
-var router = require("./router"); router = router();    //router for some /api/:name endpoints
+var Router = require("./utilities/router"); var router = new Router();    //router for some /api/:name endpoints
 
 
 app.use(bodyparser.json());
@@ -38,6 +38,7 @@ app.post('/api/:name', router.router);
 
 
 const server = http.createServer(app);
+/*
 const wss = new websocket.Server({server});
 
 wss.on('connection', function(ws) {
@@ -48,5 +49,5 @@ wss.on('connection', function(ws) {
     });
     ws.send("NEW USER JOINED");
 });
-
+*/
 server.listen(3000, () => console.log("Listening on port 3000!"))
