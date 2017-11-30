@@ -4,7 +4,7 @@
   "description": "Database for group music.",
   "main": "index.js",
   "scripts": {
-    "dev": "mongod --dbpath=%CD%/data/db --port 27017"
+    "dev": "rethinkdb --d /data"
   },
   "author": "Nathan Jewell",
   "license": "ISC",
