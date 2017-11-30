@@ -5,7 +5,7 @@ module.exports = function(connection) {
     var User = require("../types/user.js");
     var r = require("rethinkdb");
     var Spotify = require("./../utilities/spotify.js");
-    var spotify = new Spotify(null, "http://localhost:8080");
+    var spotify = new Spotify(null, "http://localhost:8080/auth");
     var that = this;
 
     that.router = new Router();
@@ -15,17 +15,36 @@ module.exports = function(connection) {
     });
 
     that.router.register("getAuthURL", (req, res) => {
-        var url = spotify.getUserAuthURL(req.query.username);
-        console.log(url);
-        res.status(200).send(JSON.stringify({authURL : url}));
+        var url = spotify.getUserAuthURL(req.body.username);
+
+        res.status(200);
+        res.set({
+            "Content-Type"                 : 'application/json',
+            "Access-Control-Allow-Origin"  : '*',
+            "Access-Control-Allow-Headers" : 'Content-Type', // You cannot use '*'
+            "Data-Type"                    : 'json'
+        })
+        res.send(JSON.stringify({authURL : url}));
         res.end();
     })
 
     that.router.register("sendAuthCode", (req, res) => {
-        var tokenStatus = spotify.getuserAuthToken(req.query.username, req.query.queryCode);
-        if (tokenStatus.success) res.status(200);
-        else res.status(400);
+        let status = spotify.getUserAuthToken(req.body.username, req.body.code)
+        status.then((status, sapi) => {
 
-        res.send(JSON.stringify(tokenStatus));
+            res.status(200);
+            res.send(JSON.stringify(status));
+            res.end();
+        }, (error) => {
+            res.status(400);
+            res.send(JSON.stringify(error));
+            res.end();
+        })
+
+
+    });
+
+    that.router.register("testAuth", (req, res) => {
+        spotify.play({uri : "spotify:track:4uLU6hMCjMI75M1A2tKUQC"});
     })
 }

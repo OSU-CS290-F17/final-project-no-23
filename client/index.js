@@ -5,8 +5,6 @@ var modal = document.getElementById("modalContent");
 var dark = document.getElementById("theme");
 var sheets = document.styleSheets;
 
-
-
 var login = function(){
   loginModal.style.display = "block";
 }

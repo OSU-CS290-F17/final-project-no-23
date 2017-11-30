@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    var axios = require("axios");
   export default{
     data(){
       return {
@@ -21,28 +22,22 @@
     },
     methods : {
       loginRequest : function(){
+        var that = this;
+
         var userInfo = {
-          username: this.$data.username,
-          password: this.$data.password,
+            username: that.$data.username,
+            password: that.$data.password,
         };
 
         console.log(userInfo);
 
-        $.ajax({
-          type: "POST",
-          url: 'http://localhost:3000/api/user/getAuthURL',
-          data: userInfo,
-          crossDomain: true,
-          dataType: 'application/json',
-          success : (data) => {
-              var json = JSON.parse(data);
-              console.log(json.authURL);
-          },
-          error : (err) => {
-              console.log("ERROR");
-              console.log(err.statusText);
-          }
-        });
+
+        axios.post('http://localhost:3000/api/user/getAuthURL', userInfo).then((response) => {
+            window.location.replace(response.data.authURL);
+        }).catch((error) => {
+            console.log(error);
+        })
+
 
       }
     }
