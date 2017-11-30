@@ -1,0 +1,126 @@
+:root{
+  --baseColor: #202020;
+  --highlight: #0066CC;
+  --light: #404040;
+  --bg: #5C80BC;
+  --offwhite: #D9DBF1;
+}
+
+body{
+  user-select: none;
+  background-color: var(--bg);
+  font-family: "cabin";
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modalContent{
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  width: 20%;
+  height: 40%;
+}
+
+.inputcontainer{
+    background-color: var(--baseColor);
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: black
+    margin: 25px auto;
+    padding: 20px;
+    height: 100%
+}
+
+input:focus{
+    border-color: var(--highlight);
+}
+
+h2{
+  font-family: "cabin";
+  font-size: 50px;
+  color: var(--highlight);
+  text-align: center;
+}
+
+input{
+  color: white;
+  background-color: var(--light);
+  border-color: black;
+  border: 2px;
+  border-radius: 5px;
+  height: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: var(--offwhite);
+    border-width: 3px;
+    border: 0px;
+}
+
+button:focus{
+  outline: 0px;
+}
+
+button{
+  shadow: none;
+  font-family: "cabin";
+  font-size: 50px;
+  color: var(--bg);
+  background-color: var(--baseColor);
+  border-radius: 30px;
+  border-color: var(--baseColor);
+  border: 3px;
+  width: 375px;
+  height: 240px;
+}
+
+#loginButton{
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 15%;
+  background-color: var(--bg);
+  font-size: 24px;
+  border-radius: 5px;
+  color: var(--highlight);
+}
+
+#joinButton{
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  margin-left: -185px;
+
+}
+
+#createButton{
+  position: absolute;
+  left: 75%;
+  top: 30%;
+  margin-left: -185px;
+}
+
+#theme{
+  width: 50px;
+  height: 50px;
+  font-size: 10px;
+}
