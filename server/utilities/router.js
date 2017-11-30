@@ -12,6 +12,7 @@ function Router() {
 
 Router.prototype.router = (req, res) => {   //function to interpret name and call matching function
     var that = this;
+    console.log("EHERERER");
     if(callbook[req.params.name]) {
         callbook[req.params.name](req, res);
     } else {

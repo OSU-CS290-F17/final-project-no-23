@@ -25,7 +25,8 @@ var user = new UserController();
 var Router = require("./utilities/router"); var router = new Router();    //router for some /api/:name endpoints
 
 
-app.use(bodyparser.json());
+//app.use(bodyparser.json());
+
 
 //defining api entrance points
 app.post('/api/queue/:name', queue.router.router);
@@ -37,7 +38,7 @@ app.post('/api/user/:name', user.router.router);
 app.post('/api/:name', router.router);
 
 
-const server = http.createServer(app);
+
 /*
 const wss = new websocket.Server({server});
 
@@ -50,4 +51,4 @@ wss.on('connection', function(ws) {
     ws.send("NEW USER JOINED");
 });
 */
-server.listen(3000, () => console.log("Listening on port 3000!"))
+app.listen(3000, () => console.log("Listening on port 3000!"))

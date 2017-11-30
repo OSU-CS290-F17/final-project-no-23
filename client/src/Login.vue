@@ -2,8 +2,8 @@
   <div>
     <login-popup></login-popup>
     <button id ="theme">Toggle Theme</button><br>
-    <button id = "joinButton">Join</button><br>
-    <button id = "createButton">Create</button><br>
+    <button id = "joinButton" v-on:click="login">Join</button><br>
+    <button id = "createButton" v-on:click="login">Create</button><br>
   </div>
 </template>
 
@@ -18,6 +18,12 @@
     },
     components: {
       loginPopup
+    },
+    methods: {
+        login : function(){
+          loginModal.style.display = "block";
+        }
     }
+
   }
 </script>

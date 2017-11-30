@@ -19,28 +19,31 @@
         password: ""
       }
     },
-
     methods : {
       loginRequest : function(){
         var userInfo = {
           username: this.$data.username,
           password: this.$data.password,
-          token: ""
         };
 
         console.log(userInfo);
 
-        var xhr = new XMLHttpRequest();
+        $.ajax({
+          type: "POST",
+          url: 'http://localhost:3000/api/user/getAuthURL',
+          data: userInfo,
+          crossDomain: true,
+          dataType: 'application/json',
+          success : (data) => {
+              var json = JSON.parse(data);
+              console.log(json.authURL);
+          },
+          error : (err) => {
+              console.log("ERROR");
+              console.log(err.statusText);
+          }
+        });
 
-        xhr.open('POST', 'localhost:3000/api/user/', userInfo);
-
-        var url = "localhost:3000/?usertoken=69420";
-        var urlParams = new URLSearchParams(window.location.search);
-
-        userInfo.token = urlParams.toString();
-        console.log(userInfo);
-
-        xhr.open('POST', 'localhost:3000/api/user/', userInfo);
       }
     }
   }
