@@ -42,7 +42,7 @@ Spotify.prototype.getUserAuthURL = function(username) {
 }
 
 Spotify.prototype.getUserAuthToken = function(username, queryCode) {
-
+    console.log("HERE");
     let acg = sapi.authorizationCodeGrant(queryCode)
     return new Promise((resolve, reject) => {
         acg.then(function(data) {
@@ -56,11 +56,14 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
             sapi.setRefreshToken(data.body['refresh_token']);
 
             //test authentication by playing songs
-            sapi.pause().then(data => {}).catch(err => {console.log(err)});
+            //sapi.pause().then(data => {}).catch(err => {console.log(err)});
 
-
+            console.log(data);
             //return json data for response
-            resolve({success : true}, sapi);
+            resolve({success : true}, {
+                accessToken : data.body['access_token'],
+                refreshToken : data.body['refresh_token']
+            });
         }, function(err) {
             console.log(err);
             reject({success: false, message: "error retrieving auth token"});
@@ -69,5 +72,6 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
 }
 
 Spotify.prototype.test = function(username) {
-    sapi.play({uri : "spotify:track:4uLU6hMCjMI75M1A2tKUQC"});
+    console.log("TESTING AUTH CONNECTION");
+    sapi.play({uris : ["spotify:track:4uLU6hMCjMI75M1A2tKUQC"]}).then(data => {}).catch(err => {console.log(err)});
 }
