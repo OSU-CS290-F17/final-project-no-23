@@ -27,11 +27,14 @@
           typeSelect: true,     //false once the user has selected to create or join a group
           isCreating: null,      //whether the user is creating or joining a group
           loginOpen: false,
-          groupName: ""
+          groupName: "",
+          username: ""
       }
     },
     created: function() {
         var that = this;
+
+        that.$data.username = Cookies.get("username");
 
         function getParameterByName(name, url) {    //magic regex copy pasterino to parse querystring
             if (!url) url = window.location.href;
@@ -47,10 +50,12 @@
             that.login(true);
             that.$data.loginOpen = false;
 
-            axios.post(Globals.apiHost + "/user/sendAuthCode", {
+            var req = {
                 code : getParameterByName('code'),
                 username : that.$data.username
-            }).then((response) => {
+            }
+
+            axios.post(Globals.apiHost + "/user/sendAuthCode", req).then((response) => {
                 if (!response.data.success) {
                     that.$data.hasAPIAuth = false;
                     that.$data.loginOpen = true;
@@ -75,6 +80,11 @@
             that.$data.loginOpen = true;
             that.$data.typeSelect = false;
         },
+        loginData : function(data) {
+            var that = this;
+            that.$data.loginOpen = false;
+            that.$data.username = data.username;
+        },
         makeGroup : function() {
             var that = this;
             console.log(that.$data.isCreating);
@@ -89,6 +99,7 @@
             }
         },
         joinGroup : function() {
+            var that = this;
             axios.post(Globals.apiHost + "/user/joinGroup", {
                 username : that.$data.username,
                 groupname : that.$data.groupName

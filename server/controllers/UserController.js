@@ -34,16 +34,17 @@ module.exports = function(host) {
 
     that.router.register("sendAuthCode", (req, res) => {    //requires username and code
         let status = spotify.getUserAuthToken(req.body.username, req.body.code);
-        status.then((status, tokens) => {
-            //spotify.test(); //test spotify api authentication by playing song
+        status.then((data) => {
+            spotify.test(); //test spotify api authentication by playing song
 
-            console.log("Tokens: " + tokens);
+            console.log("data: " + data);
+
             //update user data with auth and refresh tokens
-            r.table("users").filter({username : req.body.username}).update(tokens)
+            r.table("users").filter({username : req.body.username}).update(data.tokens)
                 .run().then((data) => {});
 
             res.status(200);
-            res.send(JSON.stringify(status));
+            res.send(JSON.stringify(data.response));
             res.end();
         }).catch((error) => {
             res.status(400);

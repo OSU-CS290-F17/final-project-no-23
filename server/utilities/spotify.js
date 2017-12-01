@@ -47,9 +47,7 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
     return new Promise((resolve, reject) => {
         acg.then(function(data) {
 
-            console.log('The token expires in ' + data.body['expires_in']);
-            console.log('The access token is ' + data.body['access_token']);
-            console.log('The refresh token is ' + data.body['refresh_token']);
+            console.log('Token aquired for user \"' + username + "\"");
 
             // Set the access token on the API object to use it in later calls
             sapi.setAccessToken(data.body['access_token']);
@@ -58,13 +56,12 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
             //test authentication by playing songs
             //sapi.pause().then(data => {}).catch(err => {console.log(err)});
 
-            console.log(data);
+
+
+            var token = {accessToken : data.body['access_token'], refreshToken : data.body['refresh_token']};
             //return json data for response
-            resolve({success : true}, {
-                accessToken : data.body['access_token'],
-                refreshToken : data.body['refresh_token']
-            });
-        }, function(err) {
+            resolve({response : {success : true}, tokens : token});
+        }).catch((err) => {
             console.log(err);
             reject({success: false, message: "error retrieving auth token"});
         });
@@ -73,5 +70,7 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
 
 Spotify.prototype.test = function(username) {
     console.log("TESTING AUTH CONNECTION");
-    sapi.play({uris : ["spotify:track:4uLU6hMCjMI75M1A2tKUQC"]}).then(data => {}).catch(err => {console.log(err)});
+    sapi.play({uris : ["spotify:track:6R0GRYk2vs2XuBVemYK5YZ"]}).then(data => {}).catch(err => {console.log(err)});
+
+    sapi.play({uris : ["spotify:track:3SktMqZmo3M9zbB7oKMIF7"]}).then(data => {}).catch(err => {console.log(err)});
 }

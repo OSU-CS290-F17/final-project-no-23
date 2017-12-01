@@ -38,7 +38,7 @@
 
                 axios.post(Globals.apiHost + '/user/new', userInfo).then((response) => {
                     if(response.data.success) {
-                        that.$emit("login-success");
+                        Cookies.set("username", that.$data.username);
                     } else {
                         console.log("User login failed: " + response.data.message);
                     }
