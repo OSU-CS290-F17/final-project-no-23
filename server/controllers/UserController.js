@@ -13,15 +13,29 @@ module.exports = function(host) {
 
     that.router.register("new", (req, res) => {
         var tmp = new User();
-        //check if user matches or if allready exists
-        r.table("users").insert({
-            username : req.body.username,
-            password : req.body.password
-        }).run().then((data) => {
-            res.status(200);
-            res.send({success : true});
-            res.end();
+        r.table("users").filter({username : req.body.username}).run().then((data) => {
+            if(data.length) {
+                if(data[0].password == req.body.password) {
+                    res.status(200);
+                    res.send(JSON.stringify({success : true, message : "Successfully logged in, welcome back."}));
+                    res.end();
+                } else {
+                    res.status(409);
+                    res.send(JSON.stringify({success : false, message : "Password does not match."}))
+                }
+            } else {
+                r.table("users").insert({
+                    username : req.body.username,
+                    password : req.body.password
+                }).run().then((data) => {
+                    res.status(200);
+                    res.send(JSON.stringify({success : true, message : "Successfully created account, welcome."}));
+                    res.end();
+                });
+            }
+
         });
+
     });
 
     that.router.register("getAuthURL", (req, res) => {  //requires username
@@ -36,8 +50,6 @@ module.exports = function(host) {
         let status = spotify.getUserAuthToken(req.body.username, req.body.code);
         status.then((data) => {
             spotify.test(); //test spotify api authentication by playing song
-
-            console.log("data: " + data);
 
             //update user data with auth and refresh tokens
             r.table("users").filter({username : req.body.username}).update(data.tokens)
@@ -55,23 +67,44 @@ module.exports = function(host) {
     });
 
     that.router.register("makeGroup", (req, res) => {   //requires groupname and username
-        r.table("groups").insert({
-            groupname : req.body.groupname,
-            creator : req.body.username
-        }).run().then((data) => {
-            res.status(200);
-            res.send(JSON.stringify(data));
-            res.end();
+        r.table("groups").filter({groupname : req.body.groupname}).run().then((data) => {
+            console.log("DATA" + JSON.stringify(data));
+
+            if(data.length) {
+                res.status(409);
+                res.send(JSON.stringify({success : false, message : "Cannot create group - allready exists."}));
+                res.end();
+                return;
+            }
+            r.table("groups").insert({
+                groupname : req.body.groupname,
+                creator : req.body.username
+            }).run().then((data) => {
+                res.status(200);
+                res.send(JSON.stringify(data));
+                res.end();
+            });
         });
+
     });
 
     that.router.register("joinGroup", (req, res) => {   //requires groupname and username
-        r.table("users").filter({username : req.body.username}).update({
-            currentGroup : req.body.groupname
-        }).run().then((data) => {
-            res.status(200);
-            res.send(JSON.stringify(data));
-            res.end();
+        r.table("groups").filter({groupname : req.body.groupname}).run().then((data) => {
+            if(!data.length) {
+                res.status(409);
+                res.send(JSON.stringify({success : false, message : "Cannot join group - does not exist."}));
+                res.end();
+                return;
+            }
+
+            r.table("users").filter({username : req.body.username}).update({
+                currentGroup : req.body.groupname
+            }).run().then((data) => {
+                res.status(200);
+                res.send(JSON.stringify({success : true, message : "Joined group successfully"}));
+                res.end();
+            });
         });
+
     });
 }

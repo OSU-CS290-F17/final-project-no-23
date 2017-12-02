@@ -71,6 +71,4 @@ Spotify.prototype.getUserAuthToken = function(username, queryCode) {
 Spotify.prototype.test = function(username) {
     console.log("TESTING AUTH CONNECTION");
     sapi.play({uris : ["spotify:track:6R0GRYk2vs2XuBVemYK5YZ"]}).then(data => {}).catch(err => {console.log(err)});
-
-    sapi.play({uris : ["spotify:track:3SktMqZmo3M9zbB7oKMIF7"]}).then(data => {}).catch(err => {console.log(err)});
 }

@@ -39,18 +39,19 @@
                 axios.post(Globals.apiHost + '/user/new', userInfo).then((response) => {
                     if(response.data.success) {
                         Cookies.set("username", that.$data.username);
+                        if(that.$props.loginType) {
+                            axios.post(Globals.apiHost + '/user/getAuthURL', userInfo).then((response) => {
+                                window.location.replace(response.data.authURL);
+                            }).catch((error) => {
+                                console.log(error);
+                            })
+                        }
                     } else {
                         console.log("User login failed: " + response.data.message);
                     }
                 });
 
-                if(that.$props.loginType) {
-                    axios.post(Globals.apiHost + '/user/getAuthURL', userInfo).then((response) => {
-                        window.location.replace(response.data.authURL);
-                    }).catch((error) => {
-                        console.log(error);
-                    })
-                }
+
 
             }
         }
