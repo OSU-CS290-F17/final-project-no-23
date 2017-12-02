@@ -30,7 +30,7 @@ a:hover {
 }
 
 .songBox {
-  max-width: 35%;
+  max-width: 45%;
   max-height: 50%;
   background-color: var(--offwhite);
   border: 5px;
@@ -50,9 +50,8 @@ a:hover {
 
 .songInfo{
   padding: 10px;
-  width: 45%;
+  max-width: 45%;
   max-height: 45%;
-  display: inline-flex;
   font-family: "cabin";
   text-align: left;
   display: inline-block;
