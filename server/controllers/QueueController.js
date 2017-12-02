@@ -15,7 +15,15 @@ module.exports = function() {   //exporting queue controller object
 
     that.router = new Router();
 
-    that.router.register("getQueue", (req, res) => {
-        res.json({success : true, currentQueue : [{title: "Twinkle Twinkle Little Star"}, {title : "Mary Had a Little Lamb"}]});
+    that.router.register("echo", (req, res) => {
+        res.status(200);
+        res.set({
+            "Content-Type"                 : 'application/json',
+            "Access-Control-Allow-Origin"  : '*',
+            "Access-Control-Allow-Headers" : 'Content-Type', // You cannot use '*'
+            "Data-Type"                    : 'json'
+        })
+        res.send(JSON.stringify({data : req}));
+        res.end();
     });
 }

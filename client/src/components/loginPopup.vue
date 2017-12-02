@@ -1,50 +1,59 @@
 <template>
-  <div id = "loginModal" class = "modal">
+  <div v-if="isOpen" id = "loginModal" class = "modal">
     <div class =  "modalContent">
       <div class = "inputcontainer">
         <h2>Sco Beavs</h2>
         <input v-model = "username" placeholder="Username"><br>
         <input v-model = "password" placeholder="Password">
         <button id = "loginButton" v-on:click = "loginRequest">Log In</button>
+        <!-- TODO make cancel button !-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  export default{
-    data(){
-      return {
-        username: "",
-        password: ""
-      }
-    },
-    methods : {
-      loginRequest : function(){
-        var userInfo = {
-          username: this.$data.username,
-          password: this.$data.password,
-        };
+    var Globals = require("./../Globals.json");
+    const axios = require("axios");
 
-        console.log(userInfo);
+    export default{
+        data(){
+            return {
+                username: "",
+                password: "",
+            }
+        },
+        props : {
+            isOpen : Boolean,
+            loginType : Boolean //false = join true=create
+        },
+        methods : {
+            loginRequest : function(){
+                var that = this;
+                console.log(Globals.apiHost);
+                var userInfo = {
+                    username: that.$data.username,
+                    password: that.$data.password,
+                };
 
-        $.ajax({
-          type: "POST",
-          url: 'http://localhost:3000/api/user/getAuthURL',
-          data: userInfo,
-          crossDomain: true,
-          dataType: 'application/json',
-          success : (data) => {
-              var json = JSON.parse(data);
-              console.log(json.authURL);
-          },
-          error : (err) => {
-              console.log("ERROR");
-              console.log(err.statusText);
-          }
-        });
+                axios.post(Globals.apiHost + '/user/new', userInfo).then((response) => {
+                    if(response.data.success) {
+                        Cookies.set("username", that.$data.username);
+                        if(that.$props.loginType) {
+                            axios.post(Globals.apiHost + '/user/getAuthURL', userInfo).then((response) => {
+                                window.location.replace(response.data.authURL);
+                            }).catch((error) => {
+                                console.log(error);
+                            })
+                        }
+                    } else {
+                        console.log("User login failed: " + response.data.message);
+                    }
+                });
 
-      }
+
+
+            }
+        }
     }
-  }
 </script>
