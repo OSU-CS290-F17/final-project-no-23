@@ -7,7 +7,7 @@
       <div class = 'inputcontainer'>
         <h2>Sco Beavs</h2>
         <input v-model="groupName" placeholder="Enter Group Name"><br>
-        <input v-model="groupCap" placeholder="Enter Member Cap"><br>
+        <input v-if='isCreating' v-model="groupCap" placeholder="Enter Member Cap"><br>
         <button id="groupButton" class = 'smallButton' v-on:click="isCreating ? makeGroup() : joinGroup()">{{isCreating ? "Create" : "Join"}} Group</button>
       </div>
     </div>
@@ -29,7 +29,8 @@
           isCreating: null,      //whether the user is creating or joining a group
           loginOpen: false,
           groupName: "",
-          username: ""
+          username: "",
+          groupCap : ''
       }
     },
     created: function() {
