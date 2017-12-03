@@ -32,6 +32,11 @@ var Router = require("./utilities/router"); var router = new Router();    //rout
 
 
 app.use(bodyparser.json()); //apply middleware to parse request body data
+app.use((req, res, next) => {
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
 
 //defining api entrance points
 app.post('/api/queue/:name', queue.router.router);
