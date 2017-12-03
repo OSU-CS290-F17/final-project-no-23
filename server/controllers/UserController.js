@@ -17,21 +17,16 @@ module.exports = function(host) {
         r.table("users").filter({username : req.body.username}).run().then((data) => {
             if(data.length) {
                 if(data[0].password == req.body.password) {
-                    res.status(200);
-                    res.send(JSON.stringify({success : true, message : "Successfully logged in, welcome back."}));
-                    res.end();
+                    Response.send(200, {success : true, message : "Successfully logged in, welcome back."}, res);
                 } else {
-                    res.status(409);
-                    res.send(JSON.stringify({success : false, message : "Password does not match."}))
+                    Response.send(409, {success : false, message : "Password does not match."}, res);
                 }
             } else {
                 r.table("users").insert({
                     username : req.body.username,
                     password : req.body.password
                 }).run().then((data) => {
-                    res.status(200);
-                    res.send(JSON.stringify({success : true, message : "Successfully created account, welcome."}));
-                    res.end();
+                    Response.send(200, {success : true, message : "Successfully created account, welcome."}, res));
                 });
             }
 
