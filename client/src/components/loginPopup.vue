@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpen" id = "loginModal" class = "modal">
+  <div v-if="isOpen" id = "loginModal">
     <div class =  "modalContent">
       <div class = "inputcontainer">
         <h2>Sco Beavs</h2>
