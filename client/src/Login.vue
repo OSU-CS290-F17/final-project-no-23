@@ -1,15 +1,16 @@
 <template>
   <div>
-    <login-popup v-on:login-success="loginOpen=false;" v-bind:loginType="isCreating" v-bind:isOpen="loginOpen"></login-popup>
     <button id ="theme">Toggle Theme</button>
-    <button v-if="typeSelect" id = "joinButton" v-on:click="login(false)">Join</button><br>
-    <button v-if="typeSelect" id = "createButton" v-on:click="login(true)">Create</button><br>
-    <div v-if="!typeSelect" id="groupForm">
+    <button v-if="typeSelect" class = 'darkButton' id = "joinButton" v-on:click="login(false)">Join</button><br>
+    <button v-if="typeSelect" class = 'darkButton' id = "createButton" v-on:click="login(true)">Create</button><br>
+    <div v-if="!typeSelect" class = 'modalContent'>
+      <div class = 'inputcontainer'>
+        <h2>Sco Beavs</h2>
         <input v-model="groupName" placeholder="Enter Group Name"><br>
-        <button id="groupButton" v-on:click="isCreating ? makeGroup() : joinGroup()">{{isCreating ? "Create" : "Join"}} Group</button>
-
+        <input v-if='isCreating' v-model="groupCap" placeholder="Enter Member Cap"><br>
+        <button id="groupButton" class = 'smallButton' v-on:click="isCreating ? makeGroup() : joinGroup()">{{isCreating ? "Create" : "Join"}} Group</button>
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -28,7 +29,8 @@
           isCreating: null,      //whether the user is creating or joining a group
           loginOpen: false,
           groupName: "",
-          username: ""
+          username: "",
+          groupCap : ''
       }
     },
     created: function() {
