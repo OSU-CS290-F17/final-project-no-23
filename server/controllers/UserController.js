@@ -6,6 +6,7 @@ module.exports = function(host) {
     var r = require("rethinkdbdash")({db : "groupify"});
     var Spotify = require("./../utilities/spotify.js");
     var spotify = new Spotify(null, host + "/auth");
+    var Response = require("./../utilities/response.js");
 
     var that = this;
 
@@ -40,10 +41,7 @@ module.exports = function(host) {
 
     that.router.register("getAuthURL", (req, res) => {  //requires username
         var url = spotify.getUserAuthURL(req.body.username);
-
-        res.status(200);
-        res.send(JSON.stringify({authURL : url}));
-        res.end();
+        Response.send(200, {authURL : url}, res);
     })
 
     that.router.register("sendAuthCode", (req, res) => {    //requires username and code
@@ -55,13 +53,9 @@ module.exports = function(host) {
             r.table("users").filter({username : req.body.username}).update(data.tokens)
                 .run().then((data) => {});
 
-            res.status(200);
-            res.send(JSON.stringify(data.response));
-            res.end();
+            Response.send(200, data.response, res);
         }).catch((error) => {
-            res.status(400);
-            res.send(JSON.stringify(error));
-            res.end();
+            Response.send(200, error, res);
         });
 
     });
@@ -71,18 +65,14 @@ module.exports = function(host) {
             console.log("DATA" + JSON.stringify(data));
 
             if(data.length) {
-                res.status(409);
-                res.send(JSON.stringify({success : false, message : "Cannot create group - allready exists."}));
-                res.end();
+                Response.send(409, {success : false, message : "Cannot create group - allready exists."}, res);
                 return;
             }
             r.table("groups").insert({
                 groupname : req.body.groupname,
                 creator : req.body.username
             }).run().then((data) => {
-                res.status(200);
-                res.send(JSON.stringify(data));
-                res.end();
+                Response.send(200, data, res);
             });
         });
 
@@ -91,18 +81,14 @@ module.exports = function(host) {
     that.router.register("joinGroup", (req, res) => {   //requires groupname and username
         r.table("groups").filter({groupname : req.body.groupname}).run().then((data) => {
             if(!data.length) {
-                res.status(409);
-                res.send(JSON.stringify({success : false, message : "Cannot join group - does not exist."}));
-                res.end();
+                Response.send(409, {success : false, message : "Cannot join group - does not exist."}, error);
                 return;
             }
 
             r.table("users").filter({username : req.body.username}).update({
                 currentGroup : req.body.groupname
             }).run().then((data) => {
-                res.status(200);
-                res.send(JSON.stringify({success : true, message : "Joined group successfully"}));
-                res.end();
+                Response.send(200, {success : true, message : "Joined group successfully"}, error);
             });
         });
 
