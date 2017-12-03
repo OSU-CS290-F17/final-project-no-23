@@ -1,9 +1,10 @@
 <template>
   <div>
     <button id ="theme">Toggle Theme</button>
+    <login-popup v-on:login-success="loginOpen=false;" v-bind:loginType="isCreating" v-bind:isOpen="loginOpen"></login-popup>
     <button v-if="typeSelect" class = 'darkButton' id = "joinButton" v-on:click="login(false)">Join</button><br>
     <button v-if="typeSelect" class = 'darkButton' id = "createButton" v-on:click="login(true)">Create</button><br>
-    <div v-if="!typeSelect" class = 'modalContent'>
+    <div v-if="!typeSelect && !loginOpen" class = 'modalContent'>
       <div class = 'inputcontainer'>
         <h2>Sco Beavs</h2>
         <input v-model="groupName" placeholder="Enter Group Name"><br>
