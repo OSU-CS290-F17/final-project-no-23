@@ -1,7 +1,7 @@
 <template>
   <div id='searchResults'>
     <input v-model='searchQuery' placeholder='Song Name' @change = 'search()'>
-    <div v-if="isOpen" id = 'resultsModal'>
+    <div id = 'resultsModal'>
       <ol id ='songs'>
         <li v-for="song in songInfo">
           <div class='songContainer'>
