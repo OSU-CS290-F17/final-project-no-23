@@ -1,47 +1,61 @@
 <template>
     <div>
-    <ol id="Queue">
-        <li v-for="song in queue" class="queueElement">
-        	<div class="voteButtons">
-                <button class="upvote">+</button>
-                <button class="downvote">-</button>
-            </div>
-            <div class='infoText'>
-                <h3 class="queueSongTitle">{{song.songname}}</h3>
-                <h4 class="queueSongArtist">{{song.artistname}}</h4>
-            </div>
-        </li>
-     </ol>
-     <button id="addSongButton" class="bigButton">Add Song</button>
- </div>
+        <player v-bind:queue[0]="song"></player>
+        <ol id="Queue">
+            <li v-for="song in queue" class="queueElement">
+            	<div class="voteButtons">
+                    <button class="upvote">+</button>
+                    <button class="downvote">-</button>
+                </div>
+                <div class='infoText'>
+                    <h3 class="queueSongTitle">{{song.title}}</h3>
+                    <h4 class="queueSongArtist">{{song.artist}}</h4>
+                    <h4 class="queueSongDuration">{{song.duration}}</h4>
+                </div>
+            </li>
+         </ol>
+         <button id="addSongButton" class="bigButton">Add Song</button>
+    </div>
 </template>
 
 <script>
+import player from "./Player.vue";
 export default {
     data() {
         return {
             queue : [
                 {
-                    songname : "Ultimate",
-                    artistname : "Denzel Currry"
+                    title : "Ultimate",
+                    artist : "Denzel Currry",
+                    duration: "0:00/0:00"
                 },
                 {
-                    songname: "Lighthouse",
-                    artistname : "Young trungus ft. Swetti Boy & Afternoon T."
+                    title: "Lighthouse",
+                    artist : "Young trungus ft. Swetti Boy & Afternoon T.",
+                    duration: "69:69/69:69"
                 }
-            ]
+            ],
+            updateTime : 3000  //update time in ms
         }
     },
-    created : {
-      //make update be called every 3 seconds
+
+    components:{
+        player
     },
     methods : {
         updateQueueList : function(song) {
-            axios.post("localhost:3000/api/queue/getQueue", {username : Cookies.get("username"), groupname : group}, (err, data) => {
+            axios.post(Globals.apiHost + '/queue/getQueue', {
+                username : Cookies.get("username"),
+                groupname : group
+            }).then((data) => {
                 queue = data.body;
-            })
+            });
+            setTimeout(function() {updateQueueList() }, that.$data.updateTime);
         }
-    }
+    },
+    created : function() {
+        that.updateQueueList();
+    },
 }
 </script>
 
@@ -59,8 +73,16 @@ li {
     display: block;
 }
 
+.queueElement {
+    background-color: #D9DBF1;
+    border-radius: 10px;
+    margin: 10px;
+    width: 550px;
+}
+
 .voteButtons{
     display: inline-block;
+    margin: 0px;
 }
 
 .upvote {
@@ -113,7 +135,23 @@ li {
 .infoText{
     display: inline-block;
     vertical-align: text-bottom;
+    margin: 0px;
 }
+
+.queueSongTitle {
+    font-size: 35px;
+    margin: 0px;
+}
+
+.queueSongArtist {
+    font-size: 20px;
+    margin: 0px 0px 0px 0px;
+}
+
+.queueSongDuration {
+    margin: 0px;
+}
+
 </style>
 
 

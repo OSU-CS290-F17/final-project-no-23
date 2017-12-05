@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import Player from "./components/Player.vue";
 import SongList from "./components/SongList.vue";
 
 export default {
@@ -15,6 +16,7 @@ export default {
         }
     },
     components: {
+        Player,
         SongList
     }
 }
