@@ -11,7 +11,7 @@ Expands results in each category on click
 //local includes
 var Router = require("./../utilities/router.js");
 var Response = require("./../utilities/response.js");
-var spotify = require("./../utilities/spotify.js");
+var spotify = new (require("./../utilities/spotify.js"))();
 
 //initializing database connection
 var r = require("rethinkdbdash")({db : "groupify"});

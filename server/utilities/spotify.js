@@ -2,7 +2,8 @@
 var SpotifyWebApi = require("spotify-web-api-node");
 
 //defining export as singleton so only single spotify web api instance is used for all API calls
-module.exports = (Spotify)();
+//NEVERMING IT DIDNT WORK
+module.exports = Spotify;
 
 var redirectURI = "";
 var connection = "";

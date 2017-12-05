@@ -11,7 +11,7 @@ Adds new songs to queue from song search list
 //local includes
 var Router = require("./../utilities/router.js");
 var Response = require("./../utilities/response.js");
-var spotify = require("./../utilities/spotify.js");
+var spotify = new (require("./../utilities/spotify.js"))();
 
 //initializing database connection
 var r = require("rethinkdbdash")({db : "groupify"});
