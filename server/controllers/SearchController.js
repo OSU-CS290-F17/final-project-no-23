@@ -25,12 +25,14 @@ function SearchController() {   //exporting queue controller object
     that.router = new Router();
 
     that.router.register("searchTracks", (req, res) => {
+
         r.table("users").filter({username : req.body.username}).run().then((data) => {
-            var data = {q : req.body.query, type : "track", limit : "15"};
+            var query = {query : req.body.query, types : ['track'], limit : {limit : '15'}};
             var thener = results => {
-                Response.send(200, results, res);
+                Response.send(200, {success : true, results : results}, res);
             }
-            spotify.do("search", data, data[0], thener);
+            spotify.search(query, data[0], thener);
+            //spotify.search(query, data[0], thener);
 
         });
     });

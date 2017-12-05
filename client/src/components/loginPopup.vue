@@ -39,6 +39,7 @@
                 axios.post(Globals.apiHost + '/user/new', userInfo).then((response) => {
                     if(response.data.success) {
                         Cookies.set("username", that.$data.username);
+                        that.$emit("login-success");
                         if(that.$props.loginType) {
                             axios.post(Globals.apiHost + '/user/getAuthURL', userInfo).then((response) => {
                                 window.location.replace(response.data.authURL);

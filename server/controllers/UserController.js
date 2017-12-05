@@ -19,7 +19,6 @@ function UserController(host) {
     that.router = new Router();
 
     that.router.register("new", (req, res) => {
-        var tmp = new User();
         r.table("users").filter({username : req.body.username}).run().then((data) => {
             if(data.length) {
                 if(data[0].password == req.body.password) {
@@ -56,7 +55,7 @@ function UserController(host) {
 
             Response.send(200, data.response, res);
         }).catch((error) => {
-            Response.send(200, error, res);
+            Response.send(400, error, res);
         });
 
     });
@@ -71,7 +70,8 @@ function UserController(host) {
             }
             r.table("groups").insert({
                 groupname : req.body.groupname,
-                creator : req.body.username
+                creator : req.body.username,
+                queue : []
             }).run().then((data) => {
                 Response.send(200, data, res);
             });
