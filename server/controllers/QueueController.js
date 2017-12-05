@@ -10,12 +10,16 @@ Adds new songs to queue from song search list
 
 module.exports = function() {   //exporting queue controller object
     var Router = require("./../utilities/router.js");
+    var Response = require("./../utilities/response.js");
 
     var that = this;
 
     that.router = new Router();
 
-    that.router.register("getQueue", (req, res) => {
-        res.json({success : true, currentQueue : [{title: "Twinkle Twinkle Little Star"}, {title : "Mary Had a Little Lamb"}]});
+    that.router.register("addSong", (req, res) => {
+        r.table("users").filter({username : req.body.username}).run().then((data) => {
+            sapi.setAccessToken(data[0].accessToken);
+            sapi.setRefreshToken(data[0].refreshToken);
+        });
     });
 }
