@@ -1,0 +1,149 @@
+:root{
+    --baseColor: #202020;
+    --highlight: #0066CC;
+    --light: #404040;
+    --bg: #5C80BC;
+    --offwhite: #D9DBF1;
+}
+
+html {
+    height: 100%;
+}
+
+body{
+    min-height: 100%;
+    background-color: var(--bg);
+    font-family: "cabin";
+    margin: 0px;
+}
+
+.content {
+    height: 100%;
+}
+
+header {
+    background-color: black;
+    width: 100%;
+    height: 56px;
+}
+
+a {
+    font-family: sans-serif;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.logoContainer{
+    width: 56px;
+    height: 100%;
+    display: inline-flex;
+}
+
+img{
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.logo {
+    height: 100%;
+}
+
+.siteTitle {
+    display: inline-flex;
+}
+
+/*.content {
+    height: 100%;
+}*/
+
+.room {
+    width: 98.9%;
+    height: 100%;
+    background-color: var(--offwhite);
+    border-radius: 10px;
+    margin: 10px 10px 0px 10px;
+}
+
+.songsBox {
+    max-width: 40%;
+    height: 100%;
+    display: inline-block;
+}
+
+.albumArtworkContainer{
+  padding: 10px;
+  width: 100px;
+  height: 100px;
+  display: inline-flex;
+}
+
+.songInfo {
+    display: inline-block;
+}
+
+.queueContainer {
+    padding-left: 40px;
+    display: block;
+}
+
+.buttons {
+    max-width: 25px;
+    display: inline-block;
+}
+
+.upvote {
+    display: block;
+    height: 20px;
+    border: solid 1px somecolor;
+  color: #eee;
+  border-radius:5px;
+ -moz-border-radius:5px;
+  background: -moz-linear-gradient(top, #5E5E5E 0%, #474747 51%, #0a0e0a 51%, #0a0809 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5E5E5E), color-stop(51%,#474747), color-stop(51%,#0a0e0a), color-stop(100%,#0a0809));
+}
+
+.downvote {
+    display: block;
+    border: solid 1px somecolor;
+    height: 20px;
+  color: #eee;
+  border-radius:5px;
+ -moz-border-radius:5px;
+  background: -moz-linear-gradient(top, #5E5E5E 0%, #474747 51%, #0a0e0a 51%, #0a0809 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5E5E5E), color-stop(51%,#474747), color-stop(51%,#0a0e0a), color-stop(100%,#0a0809));
+}
+
+.queueSongTitle {
+    display: inline-flex;
+}
+
+.queueElement {
+    display: block;
+}
+
+.groupBox {
+    max-width: 40%;
+    height: 100%;
+    display: inline-block;
+}
+
+.memberContainer{
+    width: 100%;
+}
+
+.bigButton {
+    padding: 20px;
+    border: 0px;
+    border-radius: 10px;
+}
+
+.bigButton:hover {
+    background-color: grey;
+}
+
+.bigButton:active {
+    background-color: black;
+}

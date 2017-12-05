@@ -1,0 +1,81 @@
+:root{
+  --baseColor: #202020;
+  --highlight: #0066CC;
+  --light: #404040;
+  --bg: #5C80BC;
+  --offwhite: #D9DBF1;
+}
+
+body{
+  background-color: var(--bg);
+  font-family: "cabin";
+}
+
+a {
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.logoContainer{
+  max-width: 10%;
+  max-height: 10%;
+}
+
+.logo{
+  width: 100%;
+}
+
+.songBox {
+  max-width: 45%;
+  max-height: 50%;
+  background-color: var(--offwhite);
+  border: 5px;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 10px;
+  padding: 5px;
+  display: inline-block;
+}
+
+.albumArtworkContainer{
+  padding: 10px;
+  width: 45%;
+  height: 45%;
+  display: inline-flex;
+}
+
+.songInfo{
+  padding: 10px;
+  max-width: 45%;
+  max-height: 45%;
+  font-family: "cabin";
+  text-align: left;
+  display: inline-block;
+}
+
+.songTitle{
+  font-size: 75px;
+  margin: 5px 0px 5px 0px;
+}
+
+.artist{
+  color: var(--light);
+  font-size: 50px;
+  margin: 5px 0px 5px 15px;
+}
+
+.duration{
+  font-size: 20px;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+}
+
+.groupInfo{
+  padding: 10px;
+  width: 45%;
+  display: inline-flex;
+}
