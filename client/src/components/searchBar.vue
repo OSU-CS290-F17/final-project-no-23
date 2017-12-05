@@ -1,7 +1,8 @@
 <template>
   <div id='searchResults'>
-    <input v-model='searchQuery' id="searchBar" placeholder='Song Name' @change = 'search()'>
     <div id = 'resultsModal'>
+        <input v-model='searchQuery' id="searchBar" placeholder='Song Name' @change = 'search()'>
+
       <ol id ='songs'>
         <li v-for="song in songInfo">
           <div class='songContainer'>
@@ -58,11 +59,7 @@
       */
 
       addToQueue: function(song){
-        axios.post(Globals.apiHost + 'queue/addSong', {
-          song: song
-        }).then((data)=> {
-            console.log(data);
-        });
+        that.$emit("song-added", song);
       },
       search: function(){
         var that = this;
@@ -111,6 +108,7 @@
     left: 25%;
     display: block;
     top: 15px;
+    z-index: 1;
   }
 
   h2{
@@ -135,12 +133,20 @@
     align-items: center;
     justify-content: center;
     display: flex;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
   }
 
-  .searchResults{
+  #searchResults{
     align-items: center;
     justify-content: center;
     display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 1;
+    position: fixed;
   }
 
   .songContainer{

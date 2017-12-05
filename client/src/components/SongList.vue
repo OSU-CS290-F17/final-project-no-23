@@ -1,5 +1,6 @@
 <template>
     <div>
+        <searchBar v-on:song-added="addSong" v-if="searching"></searchBar>
         <ol id="Queue">
             <li v-for="song in queue" class="queueElement">
             	<div v-if="!playing" class="voteButtons">
@@ -16,16 +17,18 @@
                 </div>
             </li>
          </ol>
-         <button id="addSongButton" class="bigButton">Add Song</button>
+         <button v-on:click="searching=true" id="addSongButton" class="bigButton">Add Song</button>
     </div>
 </template>
 
 <script>
 import player from "./Player.vue";
+import searchBar from "./searchBar.vue"
+
 export default {
     data() {
         return {
-            current : {},
+            searching : false,
             queue : [
                 {
                     title : "Ultimate",
@@ -38,14 +41,19 @@ export default {
                     duration: "69:69/69:69"
                 }
             ],
-            updateTime : 3000  //update time in ms
+            updateTime : 3000,  //update time in ms
+            groupname : "",
+            username : ""
         }
     },
+    components : {
+        searchBar
+    },
     methods : {
-        updateQueueList : function(song) {
+        updateQueueList : function() {
             axios.post(Globals.apiHost + '/queue/getQueue', {
-                username : Cookies.get("username"),
-                groupname : group
+                username : that.$data.username,
+                groupname : that.$data.groupname
             }).then((data) => {
                 queue = data.body;
             });
@@ -53,9 +61,22 @@ export default {
                 queue[0].playing = true;
             }
             setTimeout(function() {updateQueueList() }, that.$data.updateTime);
+        },
+        addSong : function(song) {
+            searching = false;
+            axios.post(Globals.apiHost + '/queue/addSong', {
+                username : username,
+                groupname : groupname,
+            }).then((res) => {
+                console.log("song added");
+            }).catch((err) => {
+                console.log("err");
+            });
         }
     },
     created : function() {
+        that.$data.username = Cookies.get("username");
+        that.$data.groupname = Cookies.get("groupname");
         that.updateQueueList();
     },
 }

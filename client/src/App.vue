@@ -12,8 +12,11 @@ import SongList from "./components/SongList.vue";
 export default {
     data() {
         return {
-            groupName : 'Music List Below'
+            groupName : ""
         }
+    },
+    created : function() {
+        groupname = Cookies.get("groupname");
     },
     components: {
         Player,
