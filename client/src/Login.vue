@@ -75,9 +75,11 @@
         }
 
     },
+    
     components: {
       loginPopup
     },
+
     methods: {
         login : function(type){
             var that = this;
