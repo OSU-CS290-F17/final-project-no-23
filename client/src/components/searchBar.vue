@@ -33,7 +33,6 @@
     methods:{
       search: function(){
         var that = this;
-        alert("nigger");
         axios.post(Globals.apiHost + "/search/searchTracks", {
             username : that.$data.username,
             query: this.$data.searchQuery
