@@ -4,11 +4,15 @@
   "description": "Node backend server for group music.",
   "main": "main.js",
   "scripts": {
-    "test": "node main.js"
+    "dev": "node main.js"
   },
-  "dependencies" : {
-      "express" : "latest",
-      "spotify" : "latest"
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "latest",
+    "rethinkdb-init": "^0.2.2",
+    "rethinkdbdash": "^2.3.31",
+    "spotify-web-api-node": "^2.5.0",
+    "ws": "^3.3.2"
   },
   "author": "Nathan Jewell",
   "license": "ISC"
