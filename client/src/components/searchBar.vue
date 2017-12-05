@@ -1,6 +1,6 @@
 <template>
   <div id='searchResults'>
-    <input v-model='searchQuery' placeholder='Song Name'>
+    <input v-model='searchQuery' placeholder='Song Name' @change = 'search()'>
     <ol id ='songs'>
       <li v-for="song in songInfo">
         <div>
@@ -16,23 +16,27 @@
 <script>
   const axios = require('axios');
 
+  var Globals = require("../Globals.json")
 
   export default{
     data(){
       return {
-        searchQuery = '',
-        songInfo = {},
-        username = ""
+        searchQuery: '',
+        songInfo: [],
+        username: ""
       }
     },
     created : function(){
       this.$data.username = Cookies.get('username');
+      var that = this;
     },
     methods:{
-      search = function(){
-        axios.post(Globals.apiHost + "/search/searchtracks", {
+      search: function(){
+        var that = this;
+        alert("nigger");
+        axios.post(Globals.apiHost + "/search/searchTracks", {
             username : that.$data.username,
-            query: searchQuery
+            query: this.$data.searchQuery
         }).then((data) => {  //request to endpoint that will add group to DB
             console.log("Track searched");
             for (track in data.tracks.items) {
@@ -45,9 +49,9 @@
               }
             }
         }).catch((error) => {console.log(error);});
-      }
+      },
 
-      returnResults = function(){
+      returnResults: function(){
 
       }
     }

@@ -27,5 +27,5 @@ function SearchController() {   //exporting queue controller object
                 Response.send(200, results, res);
             }).catch(err => {console.log(err)});
         });
-    }
+    })
 }

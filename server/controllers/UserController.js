@@ -26,7 +26,7 @@ module.exports = function(host) {
                     username : req.body.username,
                     password : req.body.password
                 }).run().then((data) => {
-                    Response.send(200, {success : true, message : "Successfully created account, welcome."}, res));
+                    Response.send(200, {success : true, message : "Successfully created account, welcome."}, res);
                 });
             }
 
