@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SongList from "./SongList.vue";
+import SongList from "./components/SongList.vue";
 
 export default {
     data() {
