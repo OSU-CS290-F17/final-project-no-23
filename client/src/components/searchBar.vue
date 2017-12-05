@@ -112,14 +112,19 @@
     z-index: 1;
   }
 
+  #songs{
+    position: absolute;
+    top: 100px;
+    width: 45%;
+  }
   h2{
-    font-size: 32px;
+    font-size: 24px;
     font-family: "cabin";
     color: var(--highlight);
     margin-bottom: 12px;
   }
   h3{
-    font-size: 20px;
+    font-size: 12px;
     font-family: "cabin";
     color: var(--baseColor);
     text-align: center;
@@ -137,6 +142,8 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    padding-right: 15px;
   }
 
   #searchResults{
@@ -148,6 +155,8 @@
     background-color: rgba(0, 0, 0, .3);
     z-index: 1;
     position: fixed;
+    left: 0px;
+    top: 0px;
   }
 
   .songContainer{
@@ -159,8 +168,7 @@
     border: 2px;
     border-radius: 15px;
     border-color: var(--baseColor);
-    width: 50%;
-    margin-left: 25%;
+    width: 100%;
     height: 150px;
     display: flex;
     align-items: center;
@@ -176,6 +184,7 @@
   button:hover{
     background-color: var(--bg);
     color: var(--offwhite);
+    cursor: pointer;
   }
   .songText{
     width: 40%;

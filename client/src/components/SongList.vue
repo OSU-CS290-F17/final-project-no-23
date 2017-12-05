@@ -11,7 +11,7 @@
                     <button class="playing">></button>
                 </div>
                 <div class='infoText'>
-                    <h3 class="queueSongTitle">{{song.title}}</h3>
+                    <h4 class="queueSongTitle">{{song.title}}</h4>
                     <h4 class="queueSongArtist">{{song.artist}}</h4>
                     <h4 class="queueSongDuration">{{song.duration}}</h4>
                 </div>
