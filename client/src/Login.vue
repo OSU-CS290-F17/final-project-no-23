@@ -62,13 +62,16 @@
                 if (!response.data.success) {
                     that.$data.hasAPIAuth = false;
                     that.$data.loginOpen = true;
-                    window.location.replace(window.location.hostname);
+                    window.location.replace("app");
                     return;
                 } else {
                     that.$data.hasAPIAuth = true;
                     window.history.pushState('group', 'Title', '/group');
                 }
             }).catch((error) => {console.log(error);});
+        } else if (window.location.pathname == "/group") {
+            that.login(true);
+            that.$data.loginOpen = false;
         }
 
     },
