@@ -23,4 +23,7 @@ export default {
 </script>
 
 <style lang="css">
+h1{
+text-align: center;
+}
 </style>

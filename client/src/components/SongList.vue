@@ -30,12 +30,10 @@ export default {
                 {
                     title : "Ultimate",
                     artist : "Denzel Currry",
-                    duration: "0:00/0:00"
                 },
                 {
                     title: "Lighthouse",
                     artist : "Young trungus ft. Swetti Boy & Afternoon T.",
-                    duration: "69:69/69:69"
                 }
             ],
             updateTime : 3000  //update time in ms
@@ -63,10 +61,23 @@ export default {
 
 <style lang="css">
 
+#addSongButton{
+    position: absolute;
+    left: 80%;
+    top: 0px;
+    width: 200px;
+    height: 200px;
+}
+
 ol {
     font-size: 20px;
     white-space: nowrap;
     padding: 0 40px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    left: 25%;
+    position: absolute;
 }
 
 li {
@@ -80,6 +91,7 @@ li {
     border-radius: 10px;
     margin: 10px;
     width: 550px;
+    margin-left: 10%;
 }
 
 .voteButtons{
@@ -136,7 +148,9 @@ li {
 
 .infoText{
     display: inline-block;
-    vertical-align: text-bottom;
+    vertical-align: center;
+    align-items: center;
+    justify-content: center;
     margin: 0px;
 }
 
