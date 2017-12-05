@@ -98,6 +98,7 @@ li {
   margin: 10px;
   text-align: center;
   display: block;
+  line-height: 35px;
 }
 
 .upvote:hover {
@@ -121,6 +122,7 @@ li {
   border-radius:5px;
   margin: 10px;
   display: block;
+  line-height: 35px;
 }
 
 .downvote:hover {
@@ -149,7 +151,7 @@ li {
 }
 
 .queueSongDuration {
-    margin: 0px;
+    margin: 0px 0px 10px 0px;
 }
 
 </style>
