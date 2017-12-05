@@ -1,6 +1,6 @@
 <template>
   <div id='searchResults'>
-    <input v-model='searchQuery' placeholder='Song Name' @change = 'search()'>
+    <input v-model='searchQuery' id="searchBar" placeholder='Song Name' @change = 'search()'>
     <div id = 'resultsModal'>
       <ol id ='songs'>
         <li v-for="song in songInfo">
@@ -103,6 +103,16 @@
   }
 </script>
 <style>
+  #searchBar{
+    width: 50%;
+    height: 75px;
+    font-size: 42px;
+    position: absolute;
+    left: 25%;
+    display: block;
+    top: 15px;
+  }
+
   h2{
     font-size: 32px;
     font-family: "cabin";
@@ -119,7 +129,22 @@
   ol li{
     list-style: none;
   }
+
+  #resultsModal{
+    margin-top: 100px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
+  .searchResults{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
   .songContainer{
+    align-self: center;
     background-color: var(--offwhite);
     margin: 1px;
     border: solid;
@@ -128,6 +153,7 @@
     border-radius: 15px;
     border-color: var(--baseColor);
     width: 50%;
+    margin-left: 25%;
     height: 150px;
     display: flex;
     align-items: center;
@@ -138,6 +164,11 @@
   button{
     width: 100px;
     height: 100px;
+  }
+
+  button:hover{
+    background-color: var(--bg);
+    color: var(--offwhite);
   }
   .songText{
     width: 40%;
