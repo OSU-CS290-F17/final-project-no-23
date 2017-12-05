@@ -59,6 +59,7 @@
       */
 
       addToQueue: function(song){
+          var that = this;
         that.$emit("song-added", song);
       },
       search: function(){

@@ -25,6 +25,9 @@
 import player from "./Player.vue";
 import searchBar from "./searchBar.vue"
 
+var Globals = require("./../Globals.json");
+const axios = require("axios");
+
 export default {
     data() {
         return {
@@ -48,6 +51,11 @@ export default {
         searchBar
     },
     methods : {
+        created : function() {
+            that.$data.username = Cookies.get("username");
+            that.$data.groupname = Cookies.get("groupname");
+            setInterval(updateQueueList, that.$data.updateTime);
+        },
         updateQueueList : function() {
             axios.post(Globals.apiHost + '/queue/getQueue', {
                 username : that.$data.username,
@@ -58,25 +66,24 @@ export default {
             if(queue.length) {
                 queue[0].playing = true;
             }
-            setTimeout(function() {updateQueueList() }, that.$data.updateTime);
+            console.log("updated queue");
         },
         addSong : function(song) {
-            searching = false;
+            var that = this;
+            that.$data.searching = false;
             axios.post(Globals.apiHost + '/queue/addSong', {
-                username : username,
-                groupname : groupname,
+                username : Cookies.get("username"),
+                groupname : Cookies.get("groupname"),
+                song : song
             }).then((res) => {
                 console.log("song added");
+                updateQueueList();
             }).catch((err) => {
                 console.log("err");
             });
         }
     },
-    created : function() {
-        that.$data.username = Cookies.get("username");
-        that.$data.groupname = Cookies.get("groupname");
-        that.updateQueueList();
-    },
+
 }
 </script>
 

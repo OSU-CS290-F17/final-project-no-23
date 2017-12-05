@@ -29,14 +29,19 @@ function QueueController() {   //exporting queue controller object
     setInterval(that.updateSpotify, 5000);  //update spotify queue every 5 seconds
 
     that.router.register("addSong", (req, res) => {
-        r.table("groups").filter({username : req.body.groupname})("queue").insert(req.body.song).then((data) => {
-            Response.send(200, {success : true, message : "Successfully added song."}, res);
-        }).catch(err => {
-            Response.send(200, {success : false, message : "Failed to add song to queue."}, res);
-        });
+        console.log("adding song" + req.body.song);
+        r.table('users').filter({username : req.body.username}).run().then(data => {
+            r.table("groups").filter({groupname : data[0].currentGroup})("queue").insert(req.body.song).then((data) => {
+                Response.send(200, {success : true, message : "Successfully added song."}, res);
+            }).catch(err => {
+                Response.send(200, {success : false, message : "Failed to add song to queue."}, res);
+            });
+        })
+
     });
 
     that.router.register("getQueue", (req, res) => {
+        console.log("getting Queue" + req.body);
         r.table("groups").filter({groupname: req.body.groupname}).run().then(data => {
             Response.send(200, {success : true, queue : data[0].queue}, res);
         }).catch((err) => {

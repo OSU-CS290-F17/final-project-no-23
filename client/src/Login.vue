@@ -115,7 +115,7 @@
                 console.log("Joined Group");
                 //need to store cookie with username/auth here
                 Cookies.set("groupname", that.$data.groupname)
-                window.location.replace(window.location.hostname + "/app"); //redirect user to app
+                window.location.replace("/app"); //redirect user to app
             }).catch((error) => {console.log(error);});
         }
     }
