@@ -8,9 +8,19 @@ Adds new songs to queue from song search list
 
 */
 
-module.exports = function() {   //exporting queue controller object
-    var Router = require("./../utilities/router.js");
-    var Response = require("./../utilities/response.js");
+//local includes
+var Router = require("./../utilities/router.js");
+var Response = require("./../utilities/response.js");
+var spotify = require("./../utilities/spotify.js");
+
+//initializing database connection
+var r = require("rethinkdbdash")({db : "groupify"});
+
+module.exports = QueueController;
+
+function QueueController() {   //exporting queue controller object
+
+
 
     var that = this;
 
@@ -18,8 +28,36 @@ module.exports = function() {   //exporting queue controller object
 
     that.router.register("addSong", (req, res) => {
         r.table("users").filter({username : req.body.username}).run().then((data) => {
-            sapi.setAccessToken(data[0].accessToken);
-            sapi.setRefreshToken(data[0].refreshToken);
+
         });
+    });
+
+    that.router.register("getQueue", (req, res) => {
+        r.table("groups").filter({groupname: req.body.groupname}).run().then(data => {
+
+        })
+    })
+
+    that.router.register("stopQueue", (req, res) => {
+
+    })
+}
+
+QueueController.prototype.getAuthUserTokens = function(username) {
+    r.table("users").filter({username : username}).run().then(data => {
+        return(data[0]);
+    });
+}
+QueueController.prototype.getGroupAuthUserTokens = function(groupname) {
+    r.table("groups").filter({groupname : groupname}).run().then((data) => {
+
+    });
+}
+
+QueueController.prototype.updateSpotify = function(){
+    r.table("groups").run().then(data => {
+        for (group in data) {
+            //update
+        }
     });
 }

@@ -1,12 +1,18 @@
 //control user API endpoints
 
-module.exports = function(host) {
-    var Router = require("./../utilities/router.js");
-    var User = require("../types/user.js");
-    var r = require("rethinkdbdash")({db : "groupify"});
-    var Spotify = require("./../utilities/spotify.js");
-    var spotify = new Spotify(null, host + "/auth");
-    var Response = require("./../utilities/response.js");
+//local includes
+var Router = require("./../utilities/router.js");
+var Response = require("./../utilities/response.js");
+var spotify = require("./../utilities/spotify.js");
+
+//initializing database connection
+var r = require("rethinkdbdash")({db : "groupify"});
+
+module.exports = UserController;
+
+
+function UserController(host) {
+
 
     var that = this;
 
@@ -26,7 +32,7 @@ module.exports = function(host) {
                     username : req.body.username,
                     password : req.body.password
                 }).run().then((data) => {
-                    Response.send(200, {success : true, message : "Successfully created account, welcome."}, res));
+                    Response.send(200, {success : true, message : "Successfully created account, welcome."}, res);
                 });
             }
 
@@ -76,16 +82,28 @@ module.exports = function(host) {
     that.router.register("joinGroup", (req, res) => {   //requires groupname and username
         r.table("groups").filter({groupname : req.body.groupname}).run().then((data) => {
             if(!data.length) {
-                Response.send(409, {success : false, message : "Cannot join group - does not exist."}, error);
+                Response.send(409, {success : false, message : "Cannot join group - does not exist."}, res);
                 return;
             }
 
             r.table("users").filter({username : req.body.username}).update({
                 currentGroup : req.body.groupname
             }).run().then((data) => {
-                Response.send(200, {success : true, message : "Joined group successfully"}, error);
+                Response.send(200, {success : true, message : "Joined group successfully"}, res);
             });
         });
 
+    });
+
+    that.router.register("deleteGroup", (req, res) => {
+        r.table("groups").filter({groupname : req.body.groupname}).run().then((data) => {
+            if (data[0].creator = req.body.username) {  //shitty auth check for now
+                //remove group
+                r.table("groups").filter({groupname : req.body.groupname}).delete().run();
+                Response.send(200, {success : true, message : "Group successfully deleted"}, res);
+            } else {
+                Response.send(400, {success : false, message : "Could not delete group. Are you the owner?"});
+            }
+        })
     });
 }
