@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Login from './Login.vue'
-import searchBar from './components/searchBar.vue'
+import NotFound from './404.vue'
 
 const routes = {
   '/': Login,
   '/auth': Login,
   '/group': Login,
   '/app': App,
-  '/searchBar': searchBar
+  '/404': NotFound
 }
 
 new Vue({
@@ -18,7 +18,11 @@ new Vue({
   },
   computed: {
     ViewComponent () {
-      return routes[this.currentRoute];
+      if(routes[this.currentRoute]) {
+          return routes[this.currentRoute]
+      } else {
+          return routes['/404']
+      }
     }
   },
   render (h) { return h(this.ViewComponent) }

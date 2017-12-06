@@ -4,17 +4,18 @@
         <ol id="Queue">
             <li v-for="song in queue" class="queueElement">
             	<div v-if="!playing" class="voteButtons">
-                    <button class="upvote">+</button>
-                    <button class="downvote">-</button>
+                    <button v-on:click="vote(1, song.uri)" class="upvote">+</button>
+                    <button v-on:click="vote(-1, song.uri)" class="downvote">-</button>
                 </div>
                 <div v-if="playing" class="voteButtons">
-                    <button class="playing">></button>
+                    <button class="playing"></button>
                 </div>
                 <div class='infoText'>
                     <h4 class="queueSongTitle">{{song.name}}</h4>
                     <h4 class="queueSongArtist">{{song.artist}}</h4>
-                    <h4 class="queueSongDuration">{{song.duration}}</h4>
+                    <h4 class="queueSongDuration">Votes : {{song.votes}}</h4>
                 </div>
+
             </li>
          </ol>
          <button v-on:click="searching=true" id="addSongButton" class="bigButton">Add Song</button>
@@ -35,7 +36,9 @@ export default {
             queue : [],
             updateTime : 3000,  //update time in ms
             groupname : "",
-            username : ""
+            username : "",
+            votes : 10,
+            voteTimer : 10000
         }
     },
     components : {
@@ -45,7 +48,8 @@ export default {
         var that = this;
         that.$data.username = Cookies.get("username");
         that.$data.groupname = Cookies.get("groupname");
-        window.setInterval(that.updateQueueList, 2000);
+        window.setInterval(that.updateQueueList, that.$data.updateTime);
+        window.setInterval(that.moreVotes, that.$data.voteTimer)
         that.updateQueueList();
     },
     methods : {
@@ -62,11 +66,12 @@ export default {
 
             });
             if(that.$data.queue.length) {
-                that.$data.queue[0]["playing"] = true;
+                that.$data.queue[0].playing = true;
             }
         },
         addSong : function(song) {
             var that = this;
+            song.votes = 0;
             that.$data.queue.push(song);
             that.$data.searching = false;
             axios.post(Globals.apiHost + '/queue/addSong', {
@@ -75,10 +80,28 @@ export default {
                 queue : that.$data.queue
             }).then((res) => {
                 console.log("song added");
-                updateQueueList();
+                that.updateQueueList();
             }).catch((err) => {
                 console.log("err");
             });
+        },
+        vote : function(updown, uri) {
+            var that = this;
+            if(votes > 0) {
+                axios.post(Globals.apiHost + '/queue/addSong', {
+                    username : Cookies.get("username"),
+                    vote : updown,
+                    song : uri
+                }).then((res) => {
+                    console.log("votes");
+                    that.updateQueueList();
+                })
+            }
+
+        },
+        moreVotes : function() {
+            var that = this;
+            that.$data.votes += 1;
         }
     },
 

@@ -28,5 +28,7 @@ export default {
 <style lang="css">
 h1{
 text-align: center;
+font-size: 72px;
+font-style: strong;
 }
 </style>

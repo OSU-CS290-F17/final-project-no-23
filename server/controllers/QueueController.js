@@ -26,7 +26,7 @@ function QueueController() {   //exporting queue controller object
 
     that.router = new Router();
 
-    setInterval(that.updateSpotify, 5000);  //update spotify queue every 5 seconds
+    setInterval(that.updateSpotify, 20000);  //update spotify queue every 5 seconds
 
     that.router.register("addSong", (req, res) => {
         console.log("adding song" + req.body.queue);
@@ -41,7 +41,6 @@ function QueueController() {   //exporting queue controller object
     });
 
     that.router.register("getQueue", (req, res) => {
-        console.log("getting Queue" + req.body);
         r.table("groups").filter({groupname: req.body.groupname})("queue").run().then(data => {
             Response.send(200, {success : true, queue : data}, res);
         }).catch((err) => {
@@ -51,6 +50,27 @@ function QueueController() {   //exporting queue controller object
 
     that.router.register("stopQueue", (req, res) => {
 
+    });
+
+    that.router.register("vote", (req, res) => {
+        console.log("VOTING");
+        r.table('users').filter({username : req.body.username}).run().then(data => {
+            r.table("groups").filter({groupname : data[0].currentGroup})("queue").run().then((queue) => {
+                for(var i = 0; i < queue.length; i++) { //find and update right song
+                    if(queue[i].uri == req.body.uri)  {
+                        queue[i].votes += Number(req.body.vote);
+                        break;
+                    }
+                }
+                r.table("groups").filter({groupname : data[0].currentGroup}).update({queue : queue}).run().then((update) => {
+                    Response.send(200, {success : true, message : "Successfully voted."}, res);
+                }).catch(err => {
+                    Response.send(200, {success : false, message : "Failed to vote."}, res);
+                });
+            }).catch(err => {
+                console.log("Error getting queue to vote.");
+            });
+        })
     });
 }
 

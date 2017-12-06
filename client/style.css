@@ -40,7 +40,8 @@ body{
     border-color: black
     margin: 25px auto;
     padding: 20px;
-    height: 100%
+    height: 100%;
+    font-size: 20px;
 }
 
 input:focus{
