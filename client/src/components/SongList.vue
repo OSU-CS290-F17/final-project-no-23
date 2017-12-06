@@ -11,7 +11,7 @@
                     <button class="playing">></button>
                 </div>
                 <div class='infoText'>
-                    <h4 class="queueSongTitle">{{song.title}}</h4>
+                    <h4 class="queueSongTitle">{{song.name}}</h4>
                     <h4 class="queueSongArtist">{{song.artist}}</h4>
                     <h4 class="queueSongDuration">{{song.duration}}</h4>
                 </div>
@@ -32,16 +32,7 @@ export default {
     data() {
         return {
             searching : false,
-            queue : [
-                {
-                    title : "Ultimate",
-                    artist : "Denzel Currry",
-                },
-                {
-                    title: "Lighthouse",
-                    artist : "Young trungus ft. Swetti Boy & Afternoon T.",
-                }
-            ],
+            queue : [],
             updateTime : 3000,  //update time in ms
             groupname : "",
             username : ""
@@ -58,7 +49,7 @@ export default {
         },
         updateQueueList : function() {
             axios.post(Globals.apiHost + '/queue/getQueue', {
-                username : that.$data.username,
+                username : Cookies.get("username"),
                 groupname : that.$data.groupname
             }).then((data) => {
                 queue = data.body;
@@ -70,11 +61,12 @@ export default {
         },
         addSong : function(song) {
             var that = this;
+            that.$data.queue.push(song);
             that.$data.searching = false;
             axios.post(Globals.apiHost + '/queue/addSong', {
                 username : Cookies.get("username"),
                 groupname : Cookies.get("groupname"),
-                song : song
+                queue : that.$data.queue
             }).then((res) => {
                 console.log("song added");
                 updateQueueList();

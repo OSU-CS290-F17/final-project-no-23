@@ -31,7 +31,7 @@ function QueueController() {   //exporting queue controller object
     that.router.register("addSong", (req, res) => {
         console.log("adding song" + req.body.song);
         r.table('users').filter({username : req.body.username}).run().then(data => {
-            r.table("groups").filter({groupname : data[0].currentGroup})("queue").insert(req.body.song).then((data) => {
+            r.table("groups").filter({groupname : data[0].currentGroup}).update({queue : req.body.queue}).run().then((data) => {
                 Response.send(200, {success : true, message : "Successfully added song."}, res);
             }).catch(err => {
                 Response.send(200, {success : false, message : "Failed to add song to queue."}, res);
@@ -42,8 +42,8 @@ function QueueController() {   //exporting queue controller object
 
     that.router.register("getQueue", (req, res) => {
         console.log("getting Queue" + req.body);
-        r.table("groups").filter({groupname: req.body.groupname}).run().then(data => {
-            Response.send(200, {success : true, queue : data[0].queue}, res);
+        r.table("groups").filter({groupname: req.body.groupname})("queue").run().then(data => {
+            Response.send(200, {success : true, queue : data}, res);
         }).catch((err) => {
             Response.send(400, {success : false, message : "Failed to retrieve queue."}, res);
         });
@@ -73,7 +73,7 @@ QueueController.prototype.updateSpotify = function(){
     r.table("groups").run().then(data => {
         for (var i = 0; i < data.length; i++) { //iterate through all groups
             if(data[i].queue.length) {  //if there is a first ssong
-                spotify.play(group.queue[0].uri, tokens, thener)
+                spotify.play(data[i].queue[0].uri, tokens, thener)
             }
         }
     });
