@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h1> Welcome to {{groupName}} </h1>
+      <h1> Welcome to {{groupname}} </h1>
       <song-list></song-list>
   </div>
 </template>
@@ -12,11 +12,11 @@ import SongList from "./components/SongList.vue";
 export default {
     data() {
         return {
-            groupName : ""
+            groupname : ""
         }
     },
     created : function() {
-        groupname = Cookies.get("groupname");
+        this.$data.groupname = Cookies.get("groupname");
     },
     components: {
         Player,
