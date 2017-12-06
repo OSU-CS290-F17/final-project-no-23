@@ -29,7 +29,7 @@ function QueueController() {   //exporting queue controller object
     setInterval(that.updateSpotify, 5000);  //update spotify queue every 5 seconds
 
     that.router.register("addSong", (req, res) => {
-        console.log("adding song" + req.body.song);
+        console.log("adding song" + req.body.queue);
         r.table('users').filter({username : req.body.username}).run().then(data => {
             r.table("groups").filter({groupname : data[0].currentGroup}).update({queue : req.body.queue}).run().then((data) => {
                 Response.send(200, {success : true, message : "Successfully added song."}, res);
@@ -71,10 +71,14 @@ QueueController.prototype.updateSpotify = function(){
         console.log("playing song now");
     }
     r.table("groups").run().then(data => {
+        console.log(data[0].queue);
         for (var i = 0; i < data.length; i++) { //iterate through all groups
-            if(data[i].queue.length) {  //if there is a first ssong
-                spotify.play(data[i].queue[0].uri, tokens, thener)
-            }
+            r.table('users').filter({username : data[i].creator}).run().then((tokens) => {
+                if(data[i].queue.length) {  //if there is a first ssong
+                    spotify.play(data[i].queue[0].uri, tokens[0], thener)
+                }
+            })
+
         }
     });
 }

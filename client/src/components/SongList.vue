@@ -41,30 +41,29 @@ export default {
     components : {
         searchBar
     },
+    created : function() {
+        var that = this;
+        that.$data.username = Cookies.get("username");
+        that.$data.groupname = Cookies.get("groupname");
+        window.setInterval(that.updateQueueList, 2000);
+        that.updateQueueList();
+    },
     methods : {
-        created : function() {
-            that.$data.username = Cookies.get("username");
-            that.$data.groupname = Cookies.get("groupname");
-            setInterval(updateQueueList, that.$data.updateTime);
-        },
+
         updateQueueList : function() {
+            var that = this;
             axios.post(Globals.apiHost + '/queue/getQueue', {
                 username : Cookies.get("username"),
                 groupname : that.$data.groupname
             }).then((data) => {
                 var trueData = [];
-                queue = data.body;
-                for (var key in data.body) {
-                  if (data.body.hasOwnProperty(key)) {
-                    var val = obj[key];
-                    console.log(val);
-                  }
-                }
+                console.log(data);
+                that.$data.queue = data.data.queue[0];
+
             });
-            if(queue.length) {
-                queue[0].playing = true;
+            if(that.$data.queue.length) {
+                that.$data.queue[0]["playing"] = true;
             }
-            console.log("updated queue");
         },
         addSong : function(song) {
             var that = this;
@@ -141,6 +140,10 @@ li {
     vertical-align: middle;
 }
 
+h3{
+    word-wrap: break-word;
+    max-width: 420px;
+}
 .upvote:hover {
     background-color: #0ccc1f;
     cursor:pointer;
