@@ -2,7 +2,7 @@
   <div v-if="isOpen" id = "loginModal">
     <div class =  "modalContent">
       <div class = "inputcontainer">
-        <h2>Sco Beavs</h2>
+        <h2>Login</h2>
         <input v-model = "username" placeholder="Username"><br>
         <input v-model = "password" placeholder="Password">
         <button id = "loginButton" v-on:click = "loginRequest">Log In</button>

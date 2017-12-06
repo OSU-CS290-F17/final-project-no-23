@@ -71,11 +71,11 @@ QueueController.prototype.updateSpotify = function(){
         console.log("playing song now");
     }
     r.table("groups").run().then(data => {
-        console.log(data[0].queue);
         for (var i = 0; i < data.length; i++) { //iterate through all groups
-            r.table('users').filter({username : data[i].creator}).run().then((tokens) => {
-                if(data[i].queue.length) {  //if there is a first ssong
-                    spotify.play(data[i].queue[0].uri, tokens[0], thener)
+            var group = data[i];
+            r.table('users').filter({username : group.creator}).run().then((tokens) => {
+                if(group.queue.length) {  //if there is a first ssong
+                    spotify.play(group.queue[0].uri, tokens[0], thener)
                 }
             })
 

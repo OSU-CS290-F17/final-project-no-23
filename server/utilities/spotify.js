@@ -78,7 +78,7 @@ Spotify.prototype.refreshUserAuthToken= function(username) {
 
 Spotify.prototype.play = function(uri, tokens) {
       sapi.setAccessToken(tokens.accessToken); sapi.setRefreshToken(tokens.refreshToken);
-      sapi.play({uris : ["spotify:track:" +   uri]}).then(data => {}).catch(err => {console.log(err)});
+      sapi.play({uris : [uri]}).then(data => {}).catch(err => {console.log(err)});
   }
 
   Spotify.prototype.do = function(method, params, tokens, thener, catcher=(err)=>{console.log(err)}) {

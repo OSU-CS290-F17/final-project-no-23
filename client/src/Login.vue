@@ -6,7 +6,7 @@
     <button v-if="typeSelect" class = 'darkButton' id = "createButton" v-on:click="login(true)">Create</button><br>
     <div v-if="!typeSelect && !loginOpen" class = 'modalContent'>
       <div class = 'inputcontainer'>
-        <h2>Sco Beavs</h2>
+        <h2>Join Group</h2>
         <input v-model="groupname" placeholder="Enter Group Name"><br>
         <input v-if='isCreating' v-model="groupCap" placeholder="Enter Member Cap"><br>
         <button id="groupButton" class = 'smallButton' v-on:click="isCreating ? makeGroup() : joinGroup()">{{isCreating ? "Create" : "Join"}} Group</button>

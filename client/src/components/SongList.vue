@@ -140,7 +140,7 @@ li {
     vertical-align: middle;
 }
 
-h3{
+h4{
     word-wrap: break-word;
     max-width: 420px;
 }
