@@ -75,6 +75,13 @@ input{
     border: 0px;
 }
 
+.darkButton:hover{
+  cursor: pointer;
+  background-color: var(--offwhite);
+  border-width: 3px;
+  border: 0px;
+}
+
 .bigBbutton:focus{
   outline: 0px;
 }

@@ -1,12 +1,13 @@
 <template>
   <div>
     <button id ="theme">Toggle Theme</button>
-    <button v-if="typeSelect" class = 'bigButton' id = "joinButton" v-on:click="login(false)">Join</button><br>
-    <button v-if="typeSelect" class = 'bigButton' id = "createButton" v-on:click="login(true)">Create</button><br>
-    <div v-if="!typeSelect" class = 'modalContent'>
+    <login-popup v-if='loginOpen' v-on:login-success="loginOpen=false;" v-bind:loginType="isCreating" v-bind:isOpen="loginOpen"></login-popup>
+    <button v-if="typeSelect" class = 'darkButton' id = "joinButton" v-on:click="login(false)">Join</button><br>
+    <button v-if="typeSelect" class = 'darkButton' id = "createButton" v-on:click="login(true)">Create</button><br>
+    <div v-if="!typeSelect && !loginOpen" class = 'modalContent'>
       <div class = 'inputcontainer'>
         <h2>Sco Beavs</h2>
-        <input v-model="groupName" placeholder="Enter Group Name"><br>
+        <input v-model="groupname" placeholder="Enter Group Name"><br>
         <input v-if='isCreating' v-model="groupCap" placeholder="Enter Member Cap"><br>
         <button id="groupButton" class = 'smallButton' v-on:click="isCreating ? makeGroup() : joinGroup()">{{isCreating ? "Create" : "Join"}} Group</button>
       </div>
@@ -28,7 +29,7 @@
           typeSelect: true,     //false once the user has selected to create or join a group
           isCreating: null,      //whether the user is creating or joining a group
           loginOpen: false,
-          groupName: "",
+          groupname: "",
           username: "",
           groupCap : ''
       }
@@ -61,19 +62,24 @@
                 if (!response.data.success) {
                     that.$data.hasAPIAuth = false;
                     that.$data.loginOpen = true;
-                    window.location.replace(window.location.hostname);
+                    window.location.replace("app");
                     return;
                 } else {
                     that.$data.hasAPIAuth = true;
                     window.history.pushState('group', 'Title', '/group');
                 }
             }).catch((error) => {console.log(error);});
+        } else if (window.location.pathname == "/group") {
+            that.login(true);
+            that.$data.loginOpen = false;
         }
 
     },
+
     components: {
       loginPopup
     },
+
     methods: {
         login : function(type){
             var that = this;
@@ -93,7 +99,7 @@
             if(that.$data.isCreating && that.$data.hasAPIAuth) {    //if we are creating a group and the user has been properly authenticated
                 axios.post(Globals.apiHost + "/user/makeGroup", {
                     username : that.$data.username,
-                    groupname : that.$data.groupName
+                    groupname : that.$data.groupname
                 }).then((response) => {  //request to endpoint that will add group to DB
                     console.log("Created Group");
                     that.joinGroup();
@@ -104,10 +110,11 @@
             var that = this;
             axios.post(Globals.apiHost + "/user/joinGroup", {
                 username : that.$data.username,
-                groupname : that.$data.groupName
+                groupname : that.$data.groupname
             }).then((response) => { //actually join group
                 console.log("Joined Group");
                 //need to store cookie with username/auth here
+                Cookies.set("groupname", that.$data.groupname)
                 window.location.replace("/app"); //redirect user to app
             }).catch((error) => {console.log(error);});
         }
