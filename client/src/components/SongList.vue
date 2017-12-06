@@ -61,7 +61,14 @@ export default {
                 username : that.$data.username,
                 groupname : that.$data.groupname
             }).then((data) => {
+                var trueData = [];
                 queue = data.body;
+                for (var key in data.body) {
+                  if (data.body.hasOwnProperty(key)) {
+                    var val = obj[key];
+                    console.log(val);
+                  }
+                }
             });
             if(queue.length) {
                 queue[0].playing = true;
@@ -135,11 +142,11 @@ li {
     display: block;
     height: 50px;
     width: 50px;
-  color: #eee;
-  border-radius:5px;
-  margin: 10px;
-  text-align: center;
-  display: block;
+    color: #eee;
+    border-radius:5px;
+    margin: 10px;
+    display: block;
+    vertical-align: middle;
 }
 
 .upvote:hover {
@@ -159,10 +166,12 @@ li {
     display: block;
     height: 50px;
     width: 50px;
-  color: #eee;
-  border-radius:5px;
-  margin: 10px;
-  display: block;
+    color: #eee;
+    border-radius:5px;
+    margin: 10px;
+    display: table-cell;
+    vertical-align: middle;
+    display: block;
 }
 
 .downvote:hover {
